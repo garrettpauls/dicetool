@@ -1,0 +1,77 @@
+# Examples #
+
+    > d20
+    19
+    > 2d20 + 3
+    (4 + 16) + 3 = 20 + 3 = 23
+    > 1d10 - 2
+    8 - 2 = 6
+
+# Lexical Structure #
+
+This section contains a description of the lexical structure.
+The syntax is case-insensitive.
+
+## Notational Conventions ##
+
+These notational conventions are used for presenting syntax:
+
+[pattern]
+  ~ optional
+{pattern}
+  ~ zero or more repetitions
+'pattern'
+  ~ literal
+(pattern)
+  ~ grouping
+pat1 | pat 2
+  ~ choice
+
+## Lexical Structure ##
+
+    program   -> multistmt eol
+    multistmt -> statement [opws binop opws multistmt]
+    statement -> (roll | constant)
+    binop     -> '+' | '-'
+
+    roll      -> [constant] 'd' constant
+    constant  -> digit {digit}
+
+    digit     -> '0' | '1' | ... | '9'
+    opws      -> {ws}
+    ws        -> wschar {wschar}
+    wschar    -> tab | space
+
+# Semantics #
+
+This section defines how each notable lexical structure should act.
+
+roll
+  ~ A roll is defined as `NdM` where `N` is the number of dice to roll
+    and `M` is the number of sides each die should have.
+    A roll is evaluated as a list of `N` random numbers in the range [1..M].
+constant
+  ~ A constant is a simple integer. It is treated as a list with one value.
+binop
+  ~ A binary operation works on two values, one on the left and one on the right.
+list
+  ~ A list can be empty or contain one or more values.
+    If an operation requires a single value instead of a list, the values in the
+    list are summed together.
+
+# UI #
+
+The UI is a simple console application.
+Each line begins with `> ` and then accepts user input until they enter a newline.
+The input is then parsed and the result displayed, then the program repeats.
+There are several commands the user can enter:
+
+'exit'
+  ~ This quits the program.
+'help'
+  ~ This displays a help message describing the various commands.
+empty line
+  ~ This repeats the last entered command.
+program
+  ~ The supplied program is parsed and evaluated, then the results are displayed.
+
