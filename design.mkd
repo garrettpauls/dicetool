@@ -70,6 +70,8 @@ There are several commands the user can enter:
   ~ This quits the program.
 'help'
   ~ This displays a help message describing the various commands.
+'version'
+  ~ This prints the current version.
 empty line
   ~ This repeats the last entered command.
 program

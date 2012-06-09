@@ -1,0 +1,17 @@
+Name:                dicetool
+Version:             0.1
+Synopsis:            A simple tool for simulating dice rolls.
+License:             MIT
+License-file:        license
+Author:              Garrett Pauls
+Category:            Data
+Build-type:          Simple
+Cabal-version:       >=1.2
+
+
+Executable dicetool
+  Hs-source-dirs: src
+  Ghc-options:    -Wall
+  Main-is:        Main.hs
+  Build-depends:  base == 4.*
+
