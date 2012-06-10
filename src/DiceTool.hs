@@ -5,6 +5,7 @@ module DiceTool
 import Data.Version       (showVersion)
 import DiceTool.Commands  (Command(..), parseCommand)
 import DiceTool.IO.Strict (putStr, putStrLn)
+import DiceTool.Parser    (parseStatement)
 import Paths_dicetool     (version)
 import Prelude     hiding (putStr, putStrLn)
 
@@ -36,5 +37,7 @@ versionMessage :: String
 versionMessage = "dicetool " ++ showVersion version
 
 evalScript :: String -> String
-evalScript _ = "TODO: Eval script"
+evalScript inp = case parseStatement inp of
+  Left err -> err
+  Right st -> show st
 
