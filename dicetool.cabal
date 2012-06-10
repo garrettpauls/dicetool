@@ -15,4 +15,5 @@ Executable dicetool
   Main-is:        Main.hs
   Build-depends:  base   == 4.*
                 , parsec == 3.*
+                , random == 1.*
 

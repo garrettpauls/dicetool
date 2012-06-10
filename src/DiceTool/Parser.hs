@@ -1,27 +1,13 @@
 module DiceTool.Parser
-( BinOp(..)
-, StmtVal(..)
-, Statement(..)
-, parseStatement
+( parseStatement
 ) where
 
 import Control.Monad      (liftM)
+import DiceTool.Types     (BinOp(..), StmtVal(..), Statement(..))
 import Prelude     hiding (const)
 import Text.Parsec        (char, digit, many, many1, oneOf
                           ,optionMaybe, parse, skipMany)
 import Text.Parsec.String (Parser)
-
-data BinOp = Plus | Minus deriving Show
-
-data StmtVal =
-     Constant Int
-   | Roll Int Int
-   deriving Show
-
-data Statement =
-     Statement StmtVal BinOp Statement
-   | LastStatement StmtVal
-   deriving Show
 
 parseStatement :: String -> Either String Statement
 parseStatement input = case parse statement "dicetool" input of
