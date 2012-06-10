@@ -1,0 +1,17 @@
+# Overview #
+
+dicetool is a simple command line utility for simulating dice rolls.
+It currently supports rolling multiple dice of any size and adding and subtracting new rolls.
+Order of operations is left-to-right.
+
+# Examples #
+ * 1d20 = rolls one 20-sided die.
+ *  d20 = rolls one 20-sided die.
+ * 2d6  = rolls two 6-sided dice.
+ * 2d4 + 1 = rolls two 4-sided dice and adds one to the result.
+ * 1d4 - 1 = rolls one 4-sided die and subtracts one.
+ * 2d6 + 2d8 - 3 = rolls two 6-sided dice and two 8-sided dice and sums the result,
+   then subtracts 3.
+ * d6 - 2 + d8 - 4 = rolls one 6-sided die, then subtracts 2, then adds the result of
+   an 8-sided die, then subtracts 4.
+
