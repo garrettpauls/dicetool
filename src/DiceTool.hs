@@ -35,7 +35,26 @@ runCommand g cmd = case cmd of
   Script x -> evalScript g x
 
 helpMessage :: String
-helpMessage = "TODO: Write help message"
+helpMessage =
+  " Type the desired dice to roll at the prompt.\n\
+  \ A dice roll is represented as follows:\n\
+  \ <#1>d<#2>\n\
+  \ where #1 is the number of dice to roll\n\
+  \ and #2 is the size of the dice to roll.\n\
+  \ If only one die is rolled, #1 can be omitted.\n\
+  \ \n\
+  \ Rolls can be added or subtracted with + and -.\n\
+  \ You can also add or subtract constants by just typing the number.\n\
+  \ \n\
+  \ Example:\n\
+  \   '1d20' rolls one 20-sided die. It can also be typed 'd20'.\n\
+  \   '2d6' rolls two 6-sided dice.\n\
+  \   '2d4 + 3' rolls two 4-sided dice and adds 3 to the result.\n\
+  \   '2d6 + d4 - 2' rolls two 6-sided dice and a 4-sided die and subtracts 2 from the total.\n\
+  \ Other commands are\n\
+  \ \n\
+  \ version - shows the program version.\n\
+  \ exit - quits the program."
 
 versionMessage :: String
 versionMessage = "dicetool " ++ showVersion version
