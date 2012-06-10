@@ -6,14 +6,30 @@ License-file:        license
 Author:              Garrett Pauls
 Category:            Data
 Build-type:          Simple
-Cabal-version:       >=1.2
-
+Cabal-version:       >=1.9.2
+Extra-source-files:  readme.mkd
 
 Executable dicetool
-  Hs-source-dirs: src
-  Ghc-options:    -Wall
-  Main-is:        Main.hs
-  Build-depends:  base   == 4.*
+  main-is:        Main.hs
+  ghc-options:    -Wall
+  hs-source-dirs: src
+  build-depends:  base   == 4.*
                 , parsec == 3.*
                 , random == 1.*
+                -- Testing assemblies, required here for cabal-dev
+                , HUnit  == 1.*
+                , test-framework == 0.*
+                , test-framework-hunit
 
+Test-Suite test-dicetool
+  main-is:        TestMain.hs
+  ghc-options:    -Wall
+  hs-source-dirs: src, tests
+  type:           exitcode-stdio-1.0
+  x-uses-tf:      true
+  build-depends:  base   == 4.*
+               ,  parsec == 3.*
+               ,  random == 1.*
+               ,  HUnit  == 1.*
+               ,  test-framework == 0.*
+               ,  test-framework-hunit

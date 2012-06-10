@@ -4,7 +4,7 @@ module DiceTool.Types
 , Statement(..)
 ) where
 
-data BinOp = Plus | Minus
+data BinOp = Plus | Minus deriving (Eq)
 instance Show BinOp where
   show Plus  = "+"
   show Minus = "-"
@@ -12,10 +12,10 @@ instance Show BinOp where
 data StmtVal =
      Constant Int
    | Roll Int Int
-   deriving Show
+   deriving (Eq, Show)
 
 data Statement =
      Statement StmtVal BinOp Statement
    | LastStatement StmtVal
-   deriving Show
+   deriving (Eq, Show)
 
