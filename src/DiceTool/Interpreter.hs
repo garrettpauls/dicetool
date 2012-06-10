@@ -38,9 +38,25 @@ showGroupLong g = case g of
     showValList xs  = "(" ++ (intercalate " + " $ map show xs) ++ ")"
 
 groupValue :: Group -> Int
-groupValue (Group xs Plus next)  = sum xs + groupValue next
-groupValue (Group xs Minus next) = sum xs - groupValue next
-groupValue (LastGroup xs) = sum xs
+groupValue = opListValue.groupsToOpList
+
+groupsToOpList :: Group -> ([Int], [BinOp])
+groupsToOpList (Group xs op next) =
+  let (rv, rop) = groupsToOpList next
+   in (sum xs:rv, op:rop)
+groupsToOpList (LastGroup xs) = ([sum xs], [])
+
+opListValue :: ([Int], [BinOp]) -> Int
+opListValue ([], _) = 0
+opListValue ([x],_) = x
+opListValue (xs,[]) = sum xs
+opListValue ((x:y:rest),(op:ops)) =
+  let z = applyOp op x y
+   in opListValue (z:rest, ops)
+
+applyOp :: BinOp -> Int -> Int -> Int
+applyOp Plus  x y = x + y
+applyOp Minus x y = x - y
 
 eval :: RandomGen g => g -> StmtVal -> ([Int], g)
 eval g (Constant c) = ([c], g)
