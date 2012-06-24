@@ -14,6 +14,6 @@ interpreterTests =
   [ testGroup "Point tests DiceTool.Interpreter" $ map mkTestCase testData ]
 
 mkTestCase :: TestData -> Test
-mkTestCase (TestData name _ stmt g result) =
-  testCase ("Interpret " ++ name) $ (fst $ interpret g stmt) @?= result
+mkTestCase (TestData command stmt g result) =
+  testCase ("Interpret " ++ command) $ (fst $ interpret g stmt) @?= result
 

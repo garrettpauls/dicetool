@@ -1,5 +1,6 @@
 module DiceTool.Types
 ( BinOp(..)
+, MinMax(..)
 , StmtVal(..)
 , Statement(..)
 ) where
@@ -9,9 +10,12 @@ instance Show BinOp where
   show Plus  = "+"
   show Minus = "-"
 
+data MinMax = Min | Max deriving (Eq, Show)
+
 data StmtVal =
      Constant Int
    | Roll Int Int
+   | RollTake Int Int MinMax Int
    deriving (Eq, Show)
 
 data Statement =

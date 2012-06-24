@@ -2,12 +2,14 @@ module DiceTool.Parser
 ( parseStatement
 ) where
 
-import Control.Monad      (liftM)
-import DiceTool.Types     (BinOp(..), StmtVal(..), Statement(..))
-import Prelude     hiding (const)
-import Text.Parsec        (char, digit, many, many1, oneOf
-                          ,optionMaybe, parse, skipMany)
-import Text.Parsec.String (Parser)
+import Control.Applicative ((<$))
+import Control.Monad       (liftM)
+import DiceTool.Types      (BinOp(..), MinMax(..), StmtVal(..), Statement(..))
+import Prelude     hiding  (const)
+import Text.Parsec         (char, digit, many, many1, oneOf, optionMaybe
+                           ,parse, skipMany, skipMany1, string, try
+                           ,(<|>))
+import Text.Parsec.String  (Parser)
 
 parseStatement :: String -> Either String Statement
 parseStatement input = case parse statement "dicetool" input of
@@ -53,11 +55,31 @@ stmtVal = do
     dieRoll :: Int -> Parser StmtVal
     dieRoll n = do
       s <- parseInt
-      return $ Roll n s
+      mTake <- optionMaybe parseTake
+      return $ case mTake of
+        (Just (m, t))  -> RollTake n s m t
+        (Nothing)      -> Roll n s
+
+parseTake :: Parser (MinMax, Int)
+parseTake = do
+  whitespace
+  _ <- string "take"
+  whitespace
+  minMax <- ( Min <$ try (string "min")
+          <|> Max <$ string "max")
+  whitespace
+  n <- parseInt
+  return (minMax, n)
 
 parseInt :: Parser Int
 parseInt = liftM read $ many1 digit
 
 optWhitespace :: Parser ()
-optWhitespace = skipMany $ oneOf " \t"
+optWhitespace = skipMany $ oneOf whitespaceChars
+
+whitespace :: Parser ()
+whitespace = skipMany1 $ oneOf whitespaceChars
+
+whitespaceChars :: [Char]
+whitespaceChars = " \t"
 

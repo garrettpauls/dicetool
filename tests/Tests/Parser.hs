@@ -14,6 +14,6 @@ parserTests =
   [ testGroup "Point tests DiceTool.Parser" $ map mkTestCase testData ]
 
 mkTestCase :: TestData -> Test
-mkTestCase (TestData name command parsed _ _) =
-  testCase ("Parse " ++ name) $ parseStatement command @?= (Right parsed)
+mkTestCase (TestData command parsed _ _) =
+  testCase ("Parse " ++ command) $ parseStatement command @?= (Right parsed)
 

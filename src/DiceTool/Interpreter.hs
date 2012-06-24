@@ -4,7 +4,7 @@ module DiceTool.Interpreter
 
 import Data.List       (intercalate)
 import DiceTool.Random (randomRCs)
-import DiceTool.Types  (BinOp(..), StmtVal(..), Statement(..))
+import DiceTool.Types  (BinOp(..), MinMax(..), StmtVal(..), Statement(..))
 import System.Random   (RandomGen)
 
 data Group =
@@ -61,4 +61,27 @@ applyOp Minus x y = x - y
 eval :: RandomGen g => g -> StmtVal -> ([Int], g)
 eval g (Constant c) = ([c], g)
 eval g (Roll n s)   = randomRCs (1, s) n g
+eval g (RollTake n s m x) =
+  let (rs, fg) = randomRCs (1, s) n g
+   in (takeThe m x rs, fg)
+
+takeThe :: Ord a => MinMax -> Int -> [a] -> [a]
+takeThe m n xs = case m of
+  Max -> takeThe' maximum n xs
+  Min -> takeThe' minimum n xs
+  where
+    takeThe' :: Ord a => ([a] -> a) -> Int -> [a] -> [a]
+    takeThe' _ _ [] = []
+    takeThe' _ 0 _  = []
+    takeThe' f n' xs' =
+      let x = f xs'
+          rest = skipFirst x xs'
+       in x:takeThe' f (n'-1) rest
+
+-- | Returns the given list without the first item equal to 'v'.
+skipFirst :: Eq a => a -> [a] -> [a]
+skipFirst _ [] = []
+skipFirst v (x:xs)
+  | v == x    = xs
+  | otherwise = x:skipFirst v xs
 

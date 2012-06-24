@@ -38,10 +38,14 @@ helpMessage :: String
 helpMessage =
   " Type the desired dice to roll at the prompt.\n\
   \ A dice roll is represented as follows:\n\
-  \ <#1>d<#2>\n\
+  \ <#1>d<#2>[ take <min/max> <#3>]\n\
   \ where #1 is the number of dice to roll\n\
   \ and #2 is the size of the dice to roll.\n\
   \ If only one die is rolled, #1 can be omitted.\n\
+  \ \n\
+  \ The take command is optional. #3 is the number of dice to take. \n\
+  \ Selecting min means take the minimun #3 dice results, while \n\
+  \ selecting max means take the maximum #3 dice results. \n\
   \ \n\
   \ Rolls can be added or subtracted with + and -.\n\
   \ You can also add or subtract constants by just typing the number.\n\
